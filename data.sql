@@ -15,7 +15,7 @@ ALTER TABLE `ab21`
     LOCK = NONE;
 
 
-CREATE USER 'abiturient_adm'@'%' IDENTIFIED BY '725XZYIGQqHt';
+CREATE USER 'abiturient_adm'@'%' IDENTIFIED BY '';
 GRANT SELECT, INSERT, UPDATE ON `abiturients`.* TO 'abiturient_adm'@'%';
 
 INSERT INTO `abiturients`.`ab21` (iin, first_name, last_name)
