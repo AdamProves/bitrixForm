@@ -1,0 +1,86 @@
+{
+  "rules": [
+    {
+      "url": "https://bitrix24.uib.kz/public_links/abiturient/",
+      "name": "Platonus v5.1",
+      "replacement": "eng2rus",
+      "fields": [
+        {
+          "selector": "#first_name",
+          "text": "[FNAME]"
+        },
+        {
+          "selector": "#last_name",
+          "text": "[LNAME]"
+        },
+        {
+          "selector": "#second_name",
+          "text": "[SNAME]"
+        },
+        {
+          "selector": "#latin_last_name",
+          "text": "[MRZLN]"
+        },
+        {
+          "selector": "#latin_first_name",
+          "text": "[MRZFN]"
+        },
+        {
+          "selector": "#iin",
+          "text": "[IIN]"
+        },
+        {
+          "selector": "#issuer",
+          "text": "[ISSUER]"
+        },
+        {
+          "selector": "#doc_num",
+          "text": "[DOCNUM]"
+        },
+        {
+          "selector": "#birth_date",
+          "text": "[BDATE:dd.mm.yyyy]"
+        },
+        {
+          "selector": "#valid_from",
+          "text": "[VALID_FROM:dd.mm.yyyy]"
+        },
+        {
+          "selector": "#valid_to",
+          "text": "[VALID_TO:dd.mm.yyyy]"
+        },
+        {
+          "selector": "#gender",
+          "select": "[SEX]",
+          "default_value": "male",
+          "selected_values": {
+            "male": "M",
+            "female": "F"
+          }
+        },
+        {
+          "selector": "#birth_place",
+          "text": "[BPLACE]"
+        },
+        {
+          "selector": "#nation",
+          "text": "[NATION]"
+        },
+        {
+          "selector": "#citizen",
+          "text": "[CITIZEN]"
+        }
+      ]
+    }
+  ],
+  "replacements": {
+    "eng2rus": {
+      "KAZAKHSTAN": "Казахстан",
+      "MINISTRY OF INTERNAL AFFAIRS": "МВД РК",
+      "MINISTRY OF JUSTICE": "Министерство юстиции",
+      "RUSSIAN FED": "Россия",
+      "KAZAKH": "Казах",
+      "RUSSIAN": "Русский"
+    }
+  }
+}
