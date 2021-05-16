@@ -7,7 +7,7 @@
 //$APPLICATION->SetTitle("Форма абитуриента");
 // -------------------------------------------------------------------- \\
 
-require __DIR__ . '/bootstrap.php';
+require __DIR__ . '/bitrixForm/bootstrap.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
