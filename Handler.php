@@ -288,7 +288,7 @@ class Handler
             default:
                 break;
         }
-        return DateTime::createFromFormat('d.m.Y', $this->data['birth_date'])->format('Ymd') . $id;
+        return $id;
     }
 
     protected function curlToBitrix(): array

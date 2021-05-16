@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-require_once 'EntrantFormModel.php';
-require_once 'Handler.php';
-require_once 'Mysql.php';
+require_once __DIR__ . '/EntrantFormModel.php';
+require_once __DIR__ . 'Handler.php';
+require_once __DIR__ . '/Mysql.php';
 
-$config = require 'config.php';
-
-require 'index.php';
+$config = require __DIR__ . '/config.php';

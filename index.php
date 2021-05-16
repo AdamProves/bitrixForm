@@ -7,6 +7,8 @@
 //$APPLICATION->SetTitle("Форма абитуриента");
 // -------------------------------------------------------------------- \\
 
+require __DIR__ . '/bootstrap.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         Handler::make(new Mysql($config), $config['limit'])->handle();
