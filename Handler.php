@@ -23,7 +23,35 @@ class Handler
         'm' => self::BITRIX_M_TYPE,
     ];
 
-    protected const REQUEST_MAP = [
+    protected const REQUEST_MAP_ONLINE = [
+        'first_name' => [
+            self::BITRIX_B_TYPE => 'UF_CRM_1619527771578',
+            self::BITRIX_M_TYPE => '',
+            'type' => 'str',
+        ],
+        'last_name' => [
+            self::BITRIX_B_TYPE => 'UF_CRM_5D38356DB0BDB',
+            self::BITRIX_M_TYPE => '',
+            'type' => 'str',
+        ],
+        'iin' => [
+            self::BITRIX_B_TYPE => 'UF_CRM_5C502158B09B7',
+            self::BITRIX_M_TYPE => '',
+            'type' => 'int',
+        ],
+        'phone' => [
+            self::BITRIX_B_TYPE => '',
+            self::BITRIX_M_TYPE => '',
+            'type' => 'int',
+        ],
+        'email' => [
+            self::BITRIX_B_TYPE => '',
+            self::BITRIX_M_TYPE => '',
+            'type' => 'email',
+        ],
+    ];
+
+    protected const REQUEST_MAP_LOCAL = [
         'first_name' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619527771578',
             self::BITRIX_M_TYPE => '',
@@ -207,7 +235,17 @@ class Handler
     {
         $result = true;
 
-        foreach (self::REQUEST_MAP as $key => $rules) {
+        if (empty($this->data['form_type'])) {
+            $result = false;
+        }
+
+        if ($this->data['form_type'] === 'online') {
+            $map = self::REQUEST_MAP_ONLINE;
+        } else {
+            $map = self::REQUEST_MAP_LOCAL;
+        }
+
+        foreach ($map as $key => $rules) {
             if (empty($this->data[$key])) {
                 $result = false;
             }
@@ -227,8 +265,17 @@ class Handler
                         $result = false;
                     }
                     break;
+                case 'email':
+                    if (filter_var($this->data[$key], FILTER_VALIDATE_EMAIL)) {
+                        $this->requestData[$rules[$this->currentType]] = (string)$this->data[$key];
+                    } else {
+                        $result = false;
+                    }
+                    break;
                 default:
-                    $this->requestData[$rules[$this->currentType]] = (string)$this->data[$key];
+                    if (isset($this->requestData[$rules[$this->currentType]])) {
+                        $this->requestData[$rules[$this->currentType]] = (string)$this->data[$key];
+                    }
                     break;
             }
         }

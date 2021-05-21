@@ -7,7 +7,7 @@
 //$APPLICATION->SetTitle("Форма абитуриента");
 // -------------------------------------------------------------------- \\
 
-require __DIR__ . '/bitrixForm/bootstrap.php';
+require __DIR__ . '/bootstrap.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
@@ -191,9 +191,7 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clik
     <div class="row">
         <div class="col l8 offset-l2 m10 offset-m1 s12 center-align">
             <h3>Данные с удостоверения абитуриента.</h3>
-            <p>Добро пожаловать в UIB, для того чтобы заполнить данные снизу, вам необходимо воспользоваться
-                карт-ридером,
-                заполнить все данные через плагин ID2, и нажать кнопку отправить.</p>
+            <p>Добро пожаловать в UIB, заполните свои данные и мы с вами свяжемся.</p>
         </div>
     </div>
     <div class="divider"></div>
@@ -211,73 +209,19 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clik
                     <label for="last_name">Фамилия</label>
                 </div>
                 <div class="input-field col l4 m12 s12">
-                    <input name="second_name" id="second_name" type="text" class="validate">
-                    <label for="second_name">Отчество</label>
+                    <input name="phone" id="phone" type="tel" class="validate data-length" data-length="12">
+                    <label for="phone">Телефон</label>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col l4 m12 s12 validate select_valid">
-                    <select name="gender" id="gender" class="validate" onchange="changeValid()">
-                        <option value="" disabled selected>Выбирете пол</option>
-                        <option value="male">Мужской</option>
-                        <option value="female">Женский</option>
-                    </select>
-                    <label for="gender">Пол</label>
-                </div>
-                <div class="input-field col l4 m12 s12">
-                    <input name="latin_first_name" id="latin_first_name" type="text" class="validate">
-                    <label for="latin_first_name">Имя на латинском</label>
-                </div>
-                <div class="input-field col l4 m12 s12">
-                    <input name="latin_last_name" id="latin_last_name" type="text" class="validate">
-                    <label for="latin_last_name">Фамилия на латинском</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col l6 m12 s12">
-                    <input name="birth_date" id="birth_date" type="text" class="datepicker validate">
-                    <label for="birth_date">Дата рождения</label>
-                </div>
                 <div class="input-field col l6 m12 s12">
                     <input name="iin" id="iin" type="text" class="validate data-length" data-length="12"
-                           onkeyup="this.value = this.value.replace (/[^0-9+]/, '')">
+                           onkeyup="this.value = this.value.replace (/[^0-9]/, '')">
                     <label for="iin">ИИН</label>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col l12 m12 s12">
-                    <input name="issuer" id="issuer" type="text" class="validate">
-                    <label for="issuer">Кем выдано</label>
-                </div>
-            </div>
-            <div class="row">
                 <div class="input-field col l6 m12 s12">
-                    <input name="valid_from" id="valid_from" type="text" class="datepicker validate">
-                    <label for="valid_from">Дата выдачи</label>
-                </div>
-                <div class="input-field col l6 m12 s12">
-                    <input name="valid_to" id="valid_to" type="text" class="datepicker validate">
-                    <label for="valid_to">Дата окончания</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col l6 m12 s12">
-                    <input name="doc_num" id="doc_num" type="text" class="validate data-length" data-length="10">
-                    <label for="doc_num">Номер удостоверения личности</label>
-                </div>
-                <div class="input-field col l6 m12 s12">
-                    <input name="birth_place" id="birth_place" type="text" class="validate">
-                    <label for="birth_place">Место рождения</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col l6 m12 s12">
-                    <input name="nation" id="nation" type="text" class="validate">
-                    <label for="nation">Национальность</label>
-                </div>
-                <div class="input-field col l6 m12 s12">
-                    <input name="citizen" id="citizen" type="text" class="validate">
-                    <label for="citizen">Гражданство</label>
+                    <input name="email" id="email" type="email" class="validate">
+                    <label for="email">e-mail</label>
                 </div>
             </div>
             <div class="row center-align">
@@ -369,63 +313,6 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clik
                     "selector": "#last_name",
                     "text": "[LNAME]"
                 },
-                {
-                    "selector": "#second_name",
-                    "text": "[SNAME]"
-                },
-                {
-                    "selector": "#latin_last_name",
-                    "text": "[MRZLN]"
-                },
-                {
-                    "selector": "#latin_first_name",
-                    "text": "[MRZFN]"
-                },
-                {
-                    "selector": "#iin",
-                    "text": "[IIN]"
-                },
-                {
-                    "selector": "#issuer",
-                    "text": "[ISSUER]"
-                },
-                {
-                    "selector": "#doc_num",
-                    "text": "[DOCNUM]"
-                },
-                {
-                    "selector": "#birth_date",
-                    "text": "[BDATE:dd.mm.yyyy]"
-                },
-                {
-                    "selector": "#valid_from",
-                    "text": "[VALID_FROM:dd.mm.yyyy]"
-                },
-                {
-                    "selector": "#valid_to",
-                    "text": "[VALID_TO:dd.mm.yyyy]"
-                },
-                {
-                    "selector": "#gender",
-                    "select": "[SEX]",
-                    "default_value": "male",
-                    "selected_values": {
-                        "male": "M",
-                        "female": "F"
-                    }
-                },
-                {
-                    "selector": "#birth_place",
-                    "text": "[BPLACE]"
-                },
-                {
-                    "selector": "#nation",
-                    "text": "[NATION]"
-                },
-                {
-                    "selector": "#citizen",
-                    "text": "[CITIZEN]"
-                }
             ]
         }
     ],
@@ -528,14 +415,11 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clik
             // Только цифры
             skipByMatch('#iin, #doc_num', /[^0-9]/g);
 
-            // Только дата
-            skipByMatch('#birth_date, #valid_from, #valid_to', /[^0-9\.]/g);
-
             // Только кирилица
-            skipByMatch('#first_name, #second_name, #last_name, #issuer, #birth_place, #citizen, #nation', /[^а-яА-Я\s]/g);
+            skipByMatch('#first_name, #last_name', /[^а-яА-Я\s]/g);
 
-            // Только латиница
-            skipByMatch('#latin_first_name, #latin_last_name', /[^a-zA-Z]/g);
+            // Телефон
+            skipByMatch('#phone', /[^0-9+]/g);
         });
 
         function changeValid() {
@@ -601,13 +485,7 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clik
         function validForm() {
             let form = new FormData(entrant_form),
                 result = false,
-                has_invalid = false,
-                gender = $('#gender');
-
-            if (gender.val() === '' || gender.val() === null) {
-                $('.select_valid').addClass('invalid');
-                has_invalid = true;
-            }
+                has_invalid = false
 
             form.forEach(function (value, key) {
                 let item = $('#' + key);
@@ -642,6 +520,7 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clik
         function prepareData(form) {
             let data = {
                 'type': $('input[name="type_group"]').val(),
+                'form_type': 'online',
             };
 
             form.forEach(function (value, key) {
