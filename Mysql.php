@@ -19,12 +19,22 @@ class Mysql
         $this->connect();
     }
 
+    /**
+     * Устанваливает коннект с бд
+     */
     protected function connect(): void
     {
         $dsn = sprintf('mysql:dbname=%s;host=127.0.0.1', $this->database);
         $this->pdo = new PDO($dsn, $this->userName, $this->password, [PDO::ATTR_CASE => PDO::CASE_LOWER]);
     }
 
+    /**
+     * Метод для создания записи абитуриента в бд
+     * @param int $iin
+     * @param string $firstName
+     * @param string $lastName
+     * @return array
+     */
     public function createAbiturient(
         int $iin,
         string $firstName,
@@ -42,6 +52,10 @@ class Mysql
         return $this->selectByIin($iin);
     }
 
+    /**
+     * Возвращает подготовленный запрос на insert
+     * @return string
+     */
     protected function getPrepareInsert(): string
     {
         return sprintf(
@@ -50,6 +64,11 @@ class Mysql
         );
     }
 
+    /**
+     * Метод делает выборку по ИИН'у
+     * @param int $iin
+     * @return array
+     */
     public function selectByIin(int $iin): array
     {
         $prepared = $this->pdo->prepare($this->getPrepareSelectIin());
@@ -57,6 +76,10 @@ class Mysql
         return $prepared->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Возвращает подготовленный запрос для поиска по иину
+     * @return string
+     */
     protected function getPrepareSelectIin(): string
     {
         return sprintf(
@@ -66,12 +89,20 @@ class Mysql
         );
     }
 
+    /**
+     * Возвращает количество записей из таблицы
+     * @return int
+     */
     public function totalCount(): int
     {
         $sql = sprintf('SELECT COUNT(*) as cnt FROM `%s`', $this->table);
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC)[0]['cnt'];
     }
 
+    /**
+     * Устанавливает тип таблицы
+     * @param string $type
+     */
     public function setTableType(string $type): void
     {
         $this->table = $this->config['table'][$type] ?? '';

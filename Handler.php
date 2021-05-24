@@ -2,27 +2,34 @@
 
 class Handler
 {
+    // Ссылка для добавления по api
     protected const BITRIX_URL = 'https://bitrix24.uib.kz/rest/10576/cym8ornpz8xkx58u/crm.deal.add.json';
-    protected const BITRIX_B_CATEGORY_ID = 34;
-    protected const BITRIX_M_CATEGORY_ID = 35;
-    protected const BITRIX_B_TYPE = 'bitrix_b';
-    protected const BITRIX_M_TYPE = 'bitrix_m';
+    protected const BITRIX_B_CATEGORY_ID = 34; // Категория бакалавриата
+    protected const BITRIX_M_CATEGORY_ID = 35; // Категория магистратуры
+    protected const BITRIX_B_TYPE = 'bitrix_b'; // Тип категории бакалавриат
+    protected const BITRIX_M_TYPE = 'bitrix_m'; // Тип категории магистратура
 
+    // Мапа по которой определяется тип
     protected const CATEGORY_MAP = [
         self::BITRIX_B_TYPE => self::BITRIX_B_CATEGORY_ID,
         self::BITRIX_M_TYPE => self::BITRIX_M_CATEGORY_ID,
     ];
 
+    // Подставление пола
     protected const GENDER_MAP = [
         'male' => 'Мужской',
         'female' => 'Женский',
     ];
 
+    // Мапа перевода данных с тех что пришли на нужный
+    // По сути копипаста но доп валидация не помешает //TODO можно оптимизировать
     protected const TYPE_MAP = [
         'b' => self::BITRIX_B_TYPE,
         'm' => self::BITRIX_M_TYPE,
     ];
 
+    // Мапа по которой проверяются пришедшие поля и подставляются id полей + тип поля
+    // str = строка | int = число | email = почта | date = дата
     protected const REQUEST_MAP_ONLINE = [
         'first_name' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619527771578',
@@ -129,29 +136,29 @@ class Handler
         ],
     ];
 
+    // Мапа по которой подставляется баркод
+    // Вынесена отдельно так как не приходит в запросе, а подставляется после запроса в бд
     protected const BARCODE_MAP = [
         self::BITRIX_B_TYPE => 'UF_CRM_1621077173967',
         self::BITRIX_M_TYPE => '',
     ];
 
-    protected string $currentType = self::BITRIX_B_TYPE;
-    protected int $responseCode = 200;
-    protected array $data = [];
-    protected array $response = [];
+    protected string $currentType = self::BITRIX_B_TYPE; // По умолчанию бакалавриат
+    protected int $responseCode = 200; // По умолчанию вернём 200 статус
+    protected array $data;
+    protected array $response;
     protected array $requestData = [];
     protected Mysql $mysql;
-    protected int $limit;
+    protected int $limit; // Лимит на количество абитуриентов, берётся из конфига
 
     public function __construct(array $data, Mysql $mysql, int $limit)
     {
         $type = $data['type'];
         unset($data['type']);
         $this->mysql = $mysql;
-        $this->currentType = self::TYPE_MAP[$type];
-        $this->mysql->setTableType($type);
-
+        $this->currentType = self::TYPE_MAP[$type]; // Проставляем текущий тип
+        $this->mysql->setTableType($type); // Указываем нужную таблицу по контексту
         $this->data = $data;
-
         $this->limit = $limit;
     }
 
@@ -171,7 +178,7 @@ class Handler
                 $limit
             );
         } catch (\Throwable $e) {
-            http_response_code(400);
+            http_response_code(418); // Вернём 418 если что-то пошло не так
             exit(1);
         }
 
@@ -192,7 +199,7 @@ class Handler
             }
 
             if (!$this->validDataAndGenerateRequest()) {
-                $this->setStatusCode(400)
+                $this->setStatusCode(400) // Если пришли не валидные данные скажем об этом и вернём 400 статус
                     ->setResponse(
                         [
                             'status' => 'fail',
@@ -204,29 +211,42 @@ class Handler
 
             $response = $this->curlToBitrix();
 
-            $this->setResponse($response)->setStatusCode(201)->send();
+            $this->setResponse($response)->setStatusCode(201)->send(); // 201 статус если всё ок
         } catch (\Throwable $e) {
             $this->setResponse(
                 [
                     'status' => 'error',
                     'message' => 'Что-то пошло не так, попробуйте позже',
                 ]
-            )->setStatusCode(418)->send();
+            )->setStatusCode(418)->send(); // Вернём 418 если что-то пошло не так
         }
     }
 
+    /**
+     * Проверим лимиты
+     * @return bool
+     */
     protected function checkLimit(): bool
     {
+        // Делаем запрос на количество записей и сравниваем с текущим лимитом
         return $this->mysql->totalCount() >= $this->limit;
     }
 
+    /**
+     * Отправляет ответ и выходит
+     */
     protected function send(): void
     {
         http_response_code($this->responseCode);
-        echo json_encode($this->response);
+        echo json_encode($this->response); // Все ответы шлю в json формате
         exit(1);
     }
 
+    /**
+     * Устанавливает ответ в виде массива
+     * @param array $data
+     * @return $this
+     */
     protected function setResponse(array $data): self
     {
         $this->response = $data;
@@ -234,20 +254,26 @@ class Handler
         return $this;
     }
 
+    /**
+     * Валидирует запрос и устанавливает ответ
+     * @return bool
+     */
     protected function validDataAndGenerateRequest(): bool
     {
         $result = true;
 
-        if (empty($this->data['form_type'])) {
+        if (empty($this->data['form_type'])) { // Если не указали с какой формы пришло, значит нас наёбывают))
             $result = false;
         }
 
+        // В зависимости от того откуда запрос подставим нужную мапу
         if ($this->data['form_type'] === 'online') {
             $map = self::REQUEST_MAP_ONLINE;
         } else {
             $map = self::REQUEST_MAP_LOCAL;
         }
 
+        // Сам процесс валидации
         foreach ($map as $key => $rules) {
             if (empty($this->data[$key])) {
                 $result = false;
@@ -275,7 +301,7 @@ class Handler
                         $result = false;
                     }
                     break;
-                default:
+                default: // Дефолтный тип это строка, её особо не провалидируешь, просто жёстко приравняем к строке
                     if (isset($this->requestData[$rules[$this->currentType]])) {
                         $this->requestData[$rules[$this->currentType]] = (string)$this->data[$key];
                     }
@@ -283,8 +309,9 @@ class Handler
             }
         }
 
+        // Делаем запрос по ИИН'у что-бы проверить на дубль
         if (!empty($this->mysql->selectByIin((int)$this->data['iin']))) {
-            $this->setResponse(
+            $this->setResponse( // Если что-то нашли, значит такой ИИН уже есть, скажем об этом и выйдем
                 [
                     'status' => 'duplicate',
                     'message' => 'Ваша заявка уже была отправлена ранее'
@@ -293,11 +320,12 @@ class Handler
             $result = 0;
         }
 
+        // Если все данные валидны отправим запрос в битрикс на создание
         if ($result) {
             $this->requestData['TITLE'] = $this->data['first_name'] . ' ' . $this->data['last_name'];
             $this->requestData['CATEGORY_ID'] = self::CATEGORY_MAP[$this->currentType];
             $this->requestData[self::BARCODE_MAP[$this->currentType]] = $this->genBarCode(
-                $this->mysql->createAbiturient(
+                $this->mysql->createAbiturient( // Не забываем создать запись в бд для получения id для баркода
                     (int)$this->data['iin'],
                     (string)$this->data['first_name'],
                     (string)$this->data['last_name']
@@ -308,6 +336,12 @@ class Handler
         return $result;
     }
 
+    /**
+     * Валидирует дату
+     * @param $date
+     * @param string $format
+     * @return bool
+     */
     protected function validateDate($date, $format = 'd.m.Y'): bool
     {
         $d = DateTime::createFromFormat($format, $date);
@@ -315,12 +349,22 @@ class Handler
         return $d && $d->format($format) === $date;
     }
 
+    /**
+     * Устанавливает статус ответа
+     * @param int $code
+     * @return $this
+     */
     protected function setStatusCode(int $code): self
     {
         $this->responseCode = $code;
         return $this;
     }
 
+    /**
+     * Логика для создания баркода, но пока криво и в целом не юзается
+     * @param array $res
+     * @return int
+     */
     protected function genBarCode(array $res): int
     {
         $id = $res[0]['id'];
@@ -341,6 +385,10 @@ class Handler
         return $id;
     }
 
+    /**
+     * Отправляет запрос в битрикс на создание сделки
+     * @return string[]
+     */
     protected function curlToBitrix(): array
     {
         $curl = curl_init();
@@ -370,6 +418,7 @@ class Handler
         $this->responseCode = $info['http_code'];
         curl_close($curl);
 
+        // Если мы получили ответ больше 300 значит что-то не то
         if (empty($result['result']) && $info['http_code'] >= 300) {
             $response = ['message' => 'Произошла ошибка при отправке, обновите страницу и повторите попытку'];
         } else {
