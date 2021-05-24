@@ -144,11 +144,14 @@ class Handler
 
     public function __construct(array $data, Mysql $mysql, int $limit)
     {
-        $this->currentType = self::TYPE_MAP[$data['type']];
+        $type = $data['type'];
         unset($data['type']);
+        $this->mysql = $mysql;
+        $this->currentType = self::TYPE_MAP[$type];
+        $this->mysql->setTableType($type);
 
         $this->data = $data;
-        $this->mysql = $mysql;
+
         $this->limit = $limit;
     }
 

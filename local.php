@@ -289,8 +289,8 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clik
                         </label>
                     </div>
                     <div class="col l6 m6">
-                        <label class="tooltipped" data-position="top" data-tooltip="Пока не доступно онлайн">
-                            <input name="type_group" value="m" disabled type="radio"/>
+                        <label>
+                            <input name="type_group" value="m" type="radio"/>
                             <span>Магистратура</span>
                         </label>
                     </div>

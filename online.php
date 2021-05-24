@@ -246,6 +246,23 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clik
                         <span>Согласен на обработку личных данных</span>
                     </label>
                 </div>
+                <div class="row center-align">
+                    <div class="col l6 m12">
+                        <div class="col l6 m6">
+                            <label>
+                                <input name="type_group" value="b" type="radio" checked/>
+                                <span>Бакалавриат</span>
+                            </label>
+                        </div>
+                        <div class="col l6 m6">
+                            <label>
+                                <input name="type_group" value="m" type="radio"/>
+                                <span>Магистратура</span>
+                            </label>
+                        </div>
+                        <div class="show-on-medium-and-down space"></div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col l3 m6 s6">

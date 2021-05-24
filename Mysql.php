@@ -6,14 +6,15 @@ class Mysql
     protected string $userName;
     protected string $database;
     protected string $table;
+    protected array $config;
     protected PDO $pdo;
 
     public function __construct(array $config)
     {
         $this->password = $config['password'];
         $this->userName = $config['user'];
-        $this->table = $config['table'];
         $this->database = $config['database'];
+        $this->config = $config;
 
         $this->connect();
     }
@@ -69,5 +70,10 @@ class Mysql
     {
         $sql = sprintf('SELECT COUNT(*) as cnt FROM `%s`', $this->table);
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC)[0]['cnt'];
+    }
+
+    public function setTableType(string $type): void
+    {
+        $this->table = $this->config['table'][$type] ?? '';
     }
 }
