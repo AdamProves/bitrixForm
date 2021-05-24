@@ -33,27 +33,27 @@ class Handler
     protected const REQUEST_MAP_ONLINE = [
         'first_name' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619527771578',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619527771578',
             'type' => 'str',
         ],
         'last_name' => [
             self::BITRIX_B_TYPE => 'UF_CRM_5D38356DB0BDB',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_5D38356DB0BDB',
             'type' => 'str',
         ],
         'iin' => [
             self::BITRIX_B_TYPE => 'UF_CRM_5C502158B09B7',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_5C502158B09B7',
             'type' => 'int',
         ],
         'phone' => [
-            self::BITRIX_B_TYPE => '',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_B_TYPE => 'UF_CRM_1621881002667',
+            self::BITRIX_M_TYPE => 'UF_CRM_1621881002667',
             'type' => 'int',
         ],
         'email' => [
-            self::BITRIX_B_TYPE => '',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_B_TYPE => 'UF_CRM_1621881034353',
+            self::BITRIX_M_TYPE => 'UF_CRM_1621881034353',
             'type' => 'email',
         ],
     ];
@@ -61,77 +61,77 @@ class Handler
     protected const REQUEST_MAP_LOCAL = [
         'first_name' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619527771578',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619527771578',
             'type' => 'str',
         ],
         'last_name' => [
             self::BITRIX_B_TYPE => 'UF_CRM_5D38356DB0BDB',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_5D38356DB0BDB',
             'type' => 'str',
         ],
         'second_name' => [
             self::BITRIX_B_TYPE => 'UF_CRM_5D38362365A13',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_5D38362365A13',
             'type' => 'str',
         ],
         'latin_first_name' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619527843599',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619527843599',
             'type' => 'str',
         ],
         'latin_last_name' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619527862877',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619527862877',
             'type' => 'str',
         ],
         'birth_date' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619527910722',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619527910722',
             'type' => 'date',
         ],
         'iin' => [
             self::BITRIX_B_TYPE => 'UF_CRM_5C502158B09B7',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_5C502158B09B7',
             'type' => 'int',
         ],
         'issuer' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619527968847',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619527968847',
             'type' => 'str',
         ],
         'valid_from' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619527980976',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619527980976',
             'type' => 'date',
         ],
         'valid_to' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619527999054',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619527999054',
             'type' => 'date',
         ],
         'doc_num' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619528008772',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619528008772',
             'type' => 'int',
         ],
         'gender' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619528018107',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619528018107',
             'type' => 'str',
         ],
         'birth_place' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619528027995',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619528027995',
             'type' => 'str',
         ],
         'nation' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619528041291',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619528041291',
             'type' => 'str',
         ],
         'citizen' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619528048890',
-            self::BITRIX_M_TYPE => '',
+            self::BITRIX_M_TYPE => 'UF_CRM_1619528048890',
             'type' => 'str',
         ],
     ];
@@ -140,7 +140,7 @@ class Handler
     // Вынесена отдельно так как не приходит в запросе, а подставляется после запроса в бд
     protected const BARCODE_MAP = [
         self::BITRIX_B_TYPE => 'UF_CRM_1621077173967',
-        self::BITRIX_M_TYPE => '',
+        self::BITRIX_M_TYPE => 'UF_CRM_1621077173967',
     ];
 
     protected string $currentType = self::BITRIX_B_TYPE; // По умолчанию бакалавриат
@@ -153,8 +153,8 @@ class Handler
 
     public function __construct(array $data, Mysql $mysql, int $limit)
     {
-        $type = $data['type'];
-        unset($data['type']);
+        $type = $data['type_group'];
+        unset($data['type_group']);
         $this->mysql = $mysql;
         $this->currentType = self::TYPE_MAP[$type]; // Проставляем текущий тип
         $this->mysql->setTableType($type); // Указываем нужную таблицу по контексту
@@ -269,8 +269,10 @@ class Handler
         // В зависимости от того откуда запрос подставим нужную мапу
         if ($this->data['form_type'] === 'online') {
             $map = self::REQUEST_MAP_ONLINE;
+            $this->requestData['UF_CRM_1621419153212'] = 758;
         } else {
             $map = self::REQUEST_MAP_LOCAL;
+            $this->requestData['UF_CRM_1621419153212'] = 759;
         }
 
         // Сам процесс валидации
@@ -302,7 +304,7 @@ class Handler
                     }
                     break;
                 default: // Дефолтный тип это строка, её особо не провалидируешь, просто жёстко приравняем к строке
-                    if (isset($this->requestData[$rules[$this->currentType]])) {
+                    if (isset($rules[$this->currentType])) {
                         $this->requestData[$rules[$this->currentType]] = (string)$this->data[$key];
                     }
                     break;
