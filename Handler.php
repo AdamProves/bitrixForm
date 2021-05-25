@@ -92,7 +92,7 @@ class Handler
         'iin' => [
             self::BITRIX_B_TYPE => 'UF_CRM_5C502158B09B7',
             self::BITRIX_M_TYPE => 'UF_CRM_5C502158B09B7',
-            'type' => 'int',
+            'type' => 'str',
         ],
         'issuer' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1619527968847',
@@ -209,7 +209,7 @@ class Handler
                     ->send();
             }
 
-            $response = $this->curlToBitrix();
+            $response = $this->curlToBitrix(); // Отправим запрос в битрикс
 
             $this->setResponse($response)->setStatusCode(201)->send(); // 201 статус если всё ок
         } catch (\Throwable $e) {
@@ -261,6 +261,7 @@ class Handler
     protected function validDataAndGenerateRequest(): bool
     {
         $result = true;
+        $prefixTittle = '';
 
         if (empty($this->data['form_type'])) { // Если не указали с какой формы пришло, значит нас наёбывают))
             $result = false;
@@ -268,6 +269,7 @@ class Handler
 
         // В зависимости от того откуда запрос подставим нужную мапу
         if ($this->data['form_type'] === 'online') {
+            $prefixTittle = 'Онлайн ';
             $map = self::REQUEST_MAP_ONLINE;
             $this->requestData['UF_CRM_1621419153212'] = 758;
         } else {
@@ -277,7 +279,7 @@ class Handler
 
         // Сам процесс валидации
         foreach ($map as $key => $rules) {
-            if (empty($this->data[$key])) {
+            if (empty($this->data[$key]) && $key !== 'second_name') {
                 $result = false;
             }
 
@@ -324,7 +326,7 @@ class Handler
 
         // Если все данные валидны отправим запрос в битрикс на создание
         if ($result) {
-            $this->requestData['TITLE'] = $this->data['first_name'] . ' ' . $this->data['last_name'];
+            $this->requestData['TITLE'] = $prefixTittle . $this->data['first_name'] . ' ' . $this->data['last_name'];
             $this->requestData['CATEGORY_ID'] = self::CATEGORY_MAP[$this->currentType];
             $this->requestData[self::BARCODE_MAP[$this->currentType]] = $this->genBarCode(
                 $this->mysql->createAbiturient( // Не забываем создать запись в бд для получения id для баркода

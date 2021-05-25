@@ -611,7 +611,7 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clik
 
             form.forEach(function (value, key) {
                 let item = $('#' + key);
-                if (value === '') {
+                if (value === '' && key !== 'second_name') {
                     item.addClass('invalid');
                     has_invalid = true;
                 }
