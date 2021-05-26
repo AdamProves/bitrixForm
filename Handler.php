@@ -139,8 +139,8 @@ class Handler
     // Мапа по которой подставляется баркод
     // Вынесена отдельно так как не приходит в запросе, а подставляется после запроса в бд
     protected const BARCODE_MAP = [
-        self::BITRIX_B_TYPE => 'UF_CRM_1621077173967',
-        self::BITRIX_M_TYPE => 'UF_CRM_1621077173967',
+        self::BITRIX_B_TYPE => 'UF_CRM_1619529801017',
+        self::BITRIX_M_TYPE => 'UF_CRM_1619529801017',
     ];
 
     protected string $currentType = self::BITRIX_B_TYPE; // По умолчанию бакалавриат
@@ -367,21 +367,21 @@ class Handler
     /**
      * Логика для создания баркода, но пока криво и в целом не юзается
      * @param array $res
-     * @return int
+     * @return string
      */
-    protected function genBarCode(array $res): int
+    protected function genBarCode(array $res): string
     {
-        $id = $res[0]['id'];
+        $id = (int)$res[0]['id'];
 
         switch (true) {
             case $id > 0 && $id < 10:
-                $id = 000 . $id;
+                $id = '000' . $id;
                 break;
             case $id >= 10 && $id < 100:
-                $id = 00 . $id;
+                $id = '00' . $id;
                 break;
             case $id >= 100 && $id < 1000:
-                $id = 0 . $id;
+                $id = '0' . $id;
                 break;
             default:
                 break;
