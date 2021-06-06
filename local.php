@@ -532,7 +532,7 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clik
             skipByMatch('#birth_date, #valid_from, #valid_to', /[^0-9\.]/g);
 
             // Только кирилица
-            skipByMatch('#first_name, #second_name, #last_name, #issuer, #birth_place, #citizen, #nation', /[^а-яА-Я\s]/g);
+            skipByMatch('#first_name, #second_name, #last_name, #issuer, #birth_place, #citizen, #nation', /[^а-яА-ЯӘ-әҰ-ұІ-іҢ-ңҒ-ғҮ-үҚ-қӨ-өҺ-һ\s]/g);
 
             // Только латиница
             skipByMatch('#latin_first_name, #latin_last_name', /[^a-zA-Z]/g);

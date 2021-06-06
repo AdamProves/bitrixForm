@@ -416,7 +416,7 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clik
             skipByMatch('#iin, #doc_num', /[^0-9]/g);
 
             // Только кирилица
-            skipByMatch('#first_name, #last_name', /[^а-яА-Я\s]/g);
+            skipByMatch('#first_name, #last_name', /[^а-яА-ЯӘ-әҰ-ұІ-іҢ-ңҒ-ғҮ-үҚ-қӨ-өҺ-һ\s]/g);
 
             // Телефон
             skipByMatch('#phone', /[^0-9+]/g);
