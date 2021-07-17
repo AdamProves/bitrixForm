@@ -3,7 +3,6 @@
 class Handler
 {
     // Ссылка для добавления по api
-    protected const BITRIX_URL = 'https://bitrix24.uib.kz/rest/10576/cym8ornpz8xkx58u/crm.deal.add.json';
     protected const BITRIX_B_CATEGORY_ID = 34; // Категория бакалавриата
     protected const BITRIX_M_CATEGORY_ID = 35; // Категория магистратуры
     protected const BITRIX_B_TYPE = 'bitrix_b'; // Тип категории бакалавриат
@@ -44,7 +43,7 @@ class Handler
         'iin' => [
             self::BITRIX_B_TYPE => 'UF_CRM_5C502158B09B7',
             self::BITRIX_M_TYPE => 'UF_CRM_5C502158B09B7',
-            'type' => 'int',
+            'type' => 'str',
         ],
         'phone' => [
             self::BITRIX_B_TYPE => 'UF_CRM_1621881002667',
@@ -314,7 +313,7 @@ class Handler
         }
 
         // Делаем запрос по ИИН'у что-бы проверить на дубль
-        if (!empty($this->mysql->selectByIin((int)$this->data['iin']))) {
+        if (!empty($this->mysql->selectByIin((string)$this->data['iin']))) {
             $this->setResponse( // Если что-то нашли, значит такой ИИН уже есть, скажем об этом и выйдем
                 [
                     'status' => 'duplicate',
@@ -330,7 +329,7 @@ class Handler
             $this->requestData['CATEGORY_ID'] = self::CATEGORY_MAP[$this->currentType];
             $this->requestData[self::BARCODE_MAP[$this->currentType]] = $this->genBarCode(
                 $this->mysql->createAbiturient( // Не забываем создать запись в бд для получения id для баркода
-                    (int)$this->data['iin'],
+                    (string)$this->data['iin'],
                     (string)$this->data['first_name'],
                     (string)$this->data['last_name']
                 )

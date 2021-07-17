@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'database' => 'abiturients',
+    'database' => 'server',
     'table' => [
         'm' => 'magistracy',
-        'b' => 'baccalaureate',
+        'b' => 'baccalaureate'
     ],
-    'user' => 'abiturient_adm',
+    'user' => 'root',
     'password' => '',
     'limit' => 10000,
     'status' => true,

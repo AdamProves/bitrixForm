@@ -30,13 +30,13 @@ class Mysql
 
     /**
      * Метод для создания записи абитуриента в бд
-     * @param int $iin
+     * @param string $iin
      * @param string $firstName
      * @param string $lastName
      * @return array
      */
     public function createAbiturient(
-        int $iin,
+        string $iin,
         string $firstName,
         string $lastName
     ): array {
@@ -66,10 +66,10 @@ class Mysql
 
     /**
      * Метод делает выборку по ИИН'у
-     * @param int $iin
+     * @param string $iin
      * @return array
      */
-    public function selectByIin(int $iin): array
+    public function selectByIin(string $iin): array
     {
         $prepared = $this->pdo->prepare($this->getPrepareSelectIin());
         $prepared->execute([$iin]);
